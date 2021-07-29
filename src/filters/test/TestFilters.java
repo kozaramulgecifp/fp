@@ -46,14 +46,6 @@ public class TestFilters {
                 return text;
             }
 
-            @Override public int getDisplayTextRangeStart() {
-                return 0;
-            }
-
-            @Override public int getDisplayTextRangeEnd() {
-                return 0;
-            }
-
             @Override
             public String getSource() {
                 return null;
@@ -169,10 +161,6 @@ public class TestFilters {
                 return null;
             }
 
-            @Override public URLEntity getQuotedStatusPermalink() {
-                return null;
-            }
-
             @Override
             public int compareTo(Status o) {
                 return 0;
@@ -196,6 +184,10 @@ public class TestFilters {
             @Override
             public MediaEntity[] getMediaEntities() {
                 return new MediaEntity[0];
+            }
+
+            @Override public ExtendedMediaEntity[] getExtendedMediaEntities() {
+                return new ExtendedMediaEntity[0];
             }
 
             @Override
