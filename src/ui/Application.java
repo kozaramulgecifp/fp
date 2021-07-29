@@ -55,7 +55,8 @@ public class Application extends JFrame {
         Set<String> allterms = getQueryTerms();
         twitterSource.setFilterTerms(allterms);
         contentPanel.addQuery(query);
-        // TODO: This is the place where you should connect the new query to the twitter source
+        // DONE: This is the place where you should connect the new query to the twitter source
+        twitterSource.addObserver(query);
     }
 
     /**
