@@ -16,7 +16,7 @@ import java.util.Observer;
 
 /**
  * A query over the twitter stream.
- * TODO: Task 4: you are to complete this class.
+ * Done: Task 4: you are to complete this class.
  */
 public class Query implements Observer {
     // The map on which to display markers when the query matches
@@ -71,7 +71,7 @@ public class Query implements Observer {
     /**
      * This query is no longer interesting, so terminate it and remove all traces of its existence.
      *
-     * TODO: Implement this method
+     * Done: Implement this method
      */
     private boolean terminated = false;
     public void terminate() {

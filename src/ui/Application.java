@@ -122,8 +122,11 @@ public class Application extends JFrame {
             public void mouseMoved(MouseEvent e) {
                 Point p = e.getPoint();
                 ICoordinate pos = map().getPosition(p);
-                // TODO: Use the following method to set the text that appears at the mouse cursor
-                map().setToolTipText("This is a tooltip");
+                // Done: Use the following method to set the text that appears at the mouse cursor
+                List<MapMarker> mapMarkers = getMarkersCovering(pos, 1);
+                if(mapMarkers!=null && mapMarkers.size()!=0) {
+                    map().setToolTipText(mapMarkers.get(0).getName());
+                }
             }
         });
     }
@@ -189,7 +192,7 @@ public class Application extends JFrame {
 
     // A query has been deleted, remove all traces of it
     public void terminateQuery(Query query) {
-        // TODO: This is the place where you should disconnect the expiring query from the twitter source
+        // Done: This is the place where you should disconnect the expiring query from the twitter source
         queries.remove(query);
         Set<String> allterms = getQueryTerms();
         twitterSource.setFilterTerms(allterms);
