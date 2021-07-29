@@ -5,6 +5,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.Layer;
 import twitter4j.Status;
+import ui.MapMarkerAdvanced;
 import ui.MapMarkerSimple;
 import util.Util;
 
@@ -83,8 +84,9 @@ public class Query implements Observer {
         if(!terminated && arg!=null) {
             Status s = (Status) arg;
             if (s.getText().contains(queryString) && s.getGeoLocation()!=null) {
-                MapMarkerSimple mapMarkerSimple = new MapMarkerSimple(getLayer(),Util.GeoLocationToCoordinate(Util.statusLocation(s)));
-                map.addMapMarker(mapMarkerSimple);
+                Coordinate coordinate = Util.GeoLocationToCoordinate(Util.statusLocation(s));
+                MapMarkerAdvanced mapMarkerAdvanced = new MapMarkerAdvanced(getLayer(),coordinate, s.getText().substring(0,15), getColor());
+                map.addMapMarker(mapMarkerAdvanced);
             }
         }
     }
