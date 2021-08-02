@@ -5,8 +5,8 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.Layer;
 import twitter4j.Status;
+import ui.Application;
 import ui.MapMarkerAdvanced;
-import ui.MapMarkerSimple;
 import util.Util;
 
 import javax.swing.*;
@@ -31,6 +31,7 @@ public class Query implements Observer {
     private final Filter filter;
     // The checkBox in the UI corresponding to this query (so we can turn it on and off and delete it)
     private JCheckBox checkBox;
+    private Application application;
 
     public Color getColor() {
         return color;
@@ -55,12 +56,13 @@ public class Query implements Observer {
     }
     public boolean getVisible() { return layer.isVisible(); }
 
-    public Query(String queryString, Color color, JMapViewer map) {
+    public Query(String queryString, Color color, JMapViewer map, Application app) {
         this.queryString = queryString;
         this.filter = Filter.parse(queryString);
         this.color = color;
         this.layer = new Layer(queryString);
         this.map = map;
+        this.application = app;
     }
 
     @Override
@@ -85,10 +87,11 @@ public class Query implements Observer {
             Status s = (Status) arg;
             if (s.getText().contains(queryString) && s.getGeoLocation()!=null) {
                 Coordinate coordinate = Util.GeoLocationToCoordinate(Util.statusLocation(s));
-                MapMarkerAdvanced mapMarkerAdvanced = new MapMarkerAdvanced(getLayer(),coordinate, s.getText().substring(0,15), getColor());
+                MapMarkerAdvanced mapMarkerAdvanced = new MapMarkerAdvanced(getLayer(),coordinate, s.getText().substring(0,15), s.getText(), s.getUser().getProfileImageURL(), getColor());
                 map.addMapMarker(mapMarkerAdvanced);
             }
         }
     }
 }
+
 

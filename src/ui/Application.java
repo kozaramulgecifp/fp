@@ -9,15 +9,21 @@ import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 import query.Query;
 import twitter.PlaybackTwitterSource;
 import twitter.TwitterSource;
+import twitter4j.Status;
 import util.SphericalGeometry;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The Twitter viewer application
@@ -32,7 +38,6 @@ public class Application extends JFrame {
     private List<Query> queries = new ArrayList<>();
     // The source of tweets, a TwitterSource, either live or playback
     private TwitterSource twitterSource;
-
     private void initialize() {
         // To use the live twitter stream, use the following line
         // twitterSource = new LiveTwitterSource();
@@ -123,9 +128,11 @@ public class Application extends JFrame {
                 Point p = e.getPoint();
                 ICoordinate pos = map().getPosition(p);
                 // Done: Use the following method to set the text that appears at the mouse cursor
-                List<MapMarker> mapMarkers = getMarkersCovering(pos, 1);
+                List<MapMarker> mapMarkers = getMarkersCovering(pos, pixelWidth(p));
                 if(mapMarkers!=null && mapMarkers.size()!=0) {
-                    map().setToolTipText(mapMarkers.get(0).getName());
+                    MapMarkerAdvanced mapMarkerAdvanced = (MapMarkerAdvanced) mapMarkers.get(0);
+                    map().setToolTipText("<html><img src=\"" + mapMarkerAdvanced.getImage()
+                            + "\">"+mapMarkerAdvanced.getTweet());
                 }
             }
         });
